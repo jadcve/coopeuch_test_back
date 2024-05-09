@@ -32,7 +32,7 @@ public class TareaController {
         this.tareaServiceImp = tareaServiceImp;
     }
 
-    @PostMapping("crear")
+    @PostMapping("/crear")
     public ResponseEntity<?> crearTarea(@Valid @RequestBody Tarea tarea, BindingResult result) {
         if (result.hasFieldErrors()) {
             return validation(result);
@@ -41,8 +41,12 @@ public class TareaController {
         return ResponseEntity.ok(tareaCreada);
     }
 
-    @PutMapping("actualizar")
-     public ResponseEntity<Optional<Tarea>> updateTarea(@Valid @RequestBody Tarea tarea, BindingResult result) {
+   
+    @PutMapping("/actualizar")
+     public ResponseEntity<?> updateTarea(@Valid @RequestBody Tarea tarea, BindingResult result) {
+        if (result.hasFieldErrors()) {
+            return validation(result);
+        }
         Optional<Tarea> TareaActualizado = tareaServiceImp.actualizarTarea(tarea);
         if (TareaActualizado.isPresent()) {
             return ResponseEntity.ok(TareaActualizado);
